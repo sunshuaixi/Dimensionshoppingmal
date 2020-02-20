@@ -44,11 +44,11 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                String name = et1.getText().toString();
+                String phone = et1.getText().toString();
                 String pwd = et2.getText().toString();
                 //存入map集合
                 Map<String,String> map=new HashMap<>();
-                map.put("name",name);
+                map.put("phone",phone);
                 map.put("pwd",pwd);
                 Myutils.getInstance().getReg(path, map, new Myutils.Ijk() {
                     @Override
