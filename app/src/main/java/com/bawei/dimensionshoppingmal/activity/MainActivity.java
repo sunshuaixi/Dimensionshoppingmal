@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity {
                 Myutils.getInstance().getReg(path, map, new Myutils.Ijk() {
                     @Override
                     public void onZhen(String json) {
-                        Log.i("xxx",json);
+                       // Log.i("xxx",json);
                         Gson gson = new Gson();
                         BeanClass beanClass = gson.fromJson(json, BeanClass.class);
                         String message = beanClass.getMessage();
