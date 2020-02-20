@@ -72,15 +72,16 @@ public class Myutils {
                                String value = entry.getValue();
                                builder.append(key+"="+value+"&");
                            }
-                           String json = builder.toString();
-                           json = json.substring(0, json.length() - 1);
-                           Log.i("xxx",json);
+                           String user = builder.toString();
+                           user = user.substring(0, user.length() - 1);
+                           Log.i("xxx",user);
                            OutputStream outputStream = conn.getOutputStream();
-                           outputStream.write(json.getBytes());
+                           outputStream.write(user.getBytes());
                            outputStream.flush();
                            conn.connect();
                            //根据结果码判断
                            int responseCode = conn.getResponseCode();
+
                            if(responseCode==200){
                                InputStream inputStream = conn.getInputStream();
                                int len=0;
@@ -103,12 +104,7 @@ public class Myutils {
                                    }
                                });
                            }else{
-                               handler.post(new Runnable() {
-                                   @Override
-                                   public void run() {
-                                       ijk.onJia("失败");
-                                   }
-                               });
+                             Log.i("xxx",responseCode+"");
                            }
                        } catch (Exception e) {
                            e.printStackTrace();
