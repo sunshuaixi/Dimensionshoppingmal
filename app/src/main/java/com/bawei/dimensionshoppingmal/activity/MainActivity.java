@@ -58,6 +58,7 @@ public class MainActivity extends BaseActivity {
                         BeanClass beanClass = gson.fromJson(json, BeanClass.class);
                         String message = beanClass.getMessage();
                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Log.i("xxx",message);
                     }
 
                     @Override
