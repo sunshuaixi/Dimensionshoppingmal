@@ -1,6 +1,11 @@
 package com.bawei.dimensionshoppingmal.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,41 +17,45 @@ import com.bawei.dimensionshoppingmal.R;
 import com.bawei.dimensionshoppingmal.baseActivity.BaseActivity;
 import com.bawei.dimensionshoppingmal.bean.BeanClass;
 import com.bawei.dimensionshoppingmal.contract.IHomePageContract;
-import com.bawei.dimensionshoppingmal.model.HomePageModel;
 import com.bawei.dimensionshoppingmal.presenter.HomePagePresenter;
-import com.bawei.dimensionshoppingmal.utils.Myutils;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
 
-public class MainActivity  extends BaseActivity implements  IHomePageContract.IView{
+public class Main2Activity extends BaseActivity implements IHomePageContract.IView {
+
 
     private EditText et1;
-    private Button bt2;
     private EditText et2;
-    String path = "http://mobile.bwstudent.com/small/user/v1/register";
-
+    private Button bt;
+    String path="http://mobile.bwstudent.com/small/user/v1/login";
     private HomePagePresenter homePagePresenter;
-    private Button bt1;
-
+    private TextView tv;
 
     @Override
     protected int getlayoutID() {
-        return R.layout.activity_main;
+        return R.layout.activity_main2;
     }
 
     @Override
     protected void initView() {
-        bt1 = findViewById(R.id.bt1);
         et1 = findViewById(R.id.et1);
         et2 = findViewById(R.id.et2);
-        bt2 = findViewById(R.id.bt2);
-
+        bt = findViewById(R.id.bt);
+        tv = findViewById(R.id.tv);
     }
 
     @Override
     protected void getData() {
-        bt1.setOnClickListener(new View.OnClickListener() {
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String phone = et1.getText().toString();
@@ -54,30 +63,18 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
                 HashMap<String,String> map=new HashMap<>();
                 map.put("phone",phone);
                 map.put("pwd",pwd);
-
-                homePagePresenter = new HomePagePresenter(MainActivity.this);
+                homePagePresenter = new HomePagePresenter(Main2Activity.this);
                 homePagePresenter.getLogin(path,map);
             }
         });
-
-        bt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-                startActivity(intent);
-            }
-        });
-
     }
-
-    //注册
+    //登陆
     @Override
-    public void onGetLonginSuccess(final String str) {
+    public void onGetLonginSuccess(String str) {
         Gson gson = new Gson();
         BeanClass beanClass = gson.fromJson(str, BeanClass.class);
-        Toast.makeText(MainActivity.this, ""+beanClass.getMessage(), Toast.LENGTH_SHORT).show();
-
-
+        String message = beanClass.getMessage();
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -94,6 +91,5 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
     public void onGetBannerFailure(String str) {
 
     }
-
 
 }
