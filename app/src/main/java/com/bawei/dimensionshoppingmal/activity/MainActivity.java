@@ -1,8 +1,5 @@
 package com.bawei.dimensionshoppingmal.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,15 +13,14 @@ import com.bawei.dimensionshoppingmal.utils.Myutils;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
-import java.util.Map;
 
-public class MainActivity extends BaseActivity implements IHomePageContract.IView {
+public class MainActivity  extends BaseActivity implements  IHomePageContract.IView{
 
-
-    private EditText et2;
     private EditText et1;
     private Button bt;
+    private EditText et2;
     String path = "http://mobile.bwstudent.com/small/user/v1/register";
+
     @Override
     protected int getlayoutID() {
         return R.layout.activity_main;
@@ -39,28 +35,29 @@ public class MainActivity extends BaseActivity implements IHomePageContract.IVie
 
     @Override
     protected void getData() {
-       bt.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               String phone = et1.getText().toString();
-               String pwd = et2.getText().toString();
-              HashMap<String,String> map=new HashMap<>();
-              Myutils.getInstance().getReg(path, map, new Myutils.Ijk() {
-                  @Override
-                  public void onSuccess(String json) {
-                      Gson gson = new Gson();
-                      BeanClass beanClass = gson.fromJson(json, BeanClass.class);
-                      Log.i("xxx",json);
-                      Toast.makeText(MainActivity.this, ""+beanClass.getMessage(), Toast.LENGTH_SHORT).show();
-                  }
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phone = et1.getText().toString();
+                String pwd = et2.getText().toString();
+                HashMap<String,String> map=new HashMap<>();
+                map.put("phone",phone);
+                map.put("pwd",pwd);
+                Myutils.getInstance().getReg(path, map, new Myutils.Ijk() {
+                    @Override
+                    public void onSuccess(String json) {
+                        Gson gson = new Gson();
+                        BeanClass beanClass = gson.fromJson(json, BeanClass.class);
+                        Toast.makeText(MainActivity.this, ""+beanClass.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
-                  @Override
-                  public void onError(String msg) {
+                    @Override
+                    public void onError(String msg) {
 
-                  }
-              });
-           }
-       });
+                    }
+                });
+            }
+        });
     }
 
 
