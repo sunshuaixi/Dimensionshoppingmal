@@ -7,9 +7,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bawei.dimensionshoppingmal.activity.MainActivity;
-import com.bawei.dimensionshoppingmal.context.App;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -23,7 +20,7 @@ import java.util.Map;
  * Descriotion:
  */
 public class Myutils {
-    private static Myutils myutils=new Myutils();
+    public static Myutils myutils=new Myutils();
 
     private Myutils(){
 
@@ -45,73 +42,100 @@ public class Myutils {
     Handler handler=new Handler();
 
     public interface Ijk{
-        void onZhen(String json);
-        void onJia(String msg);
+        void onSuccess(String json);
+        void onError(String msg);
+    }
+
+    public void getJson(final String path, final Ijk ijk){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(path);
+                    HttpURLConnection conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setConnectTimeout(5000);
+                    conn.setReadTimeout(5000);
+                    int responseCode = conn.getResponseCode();
+                    if(responseCode==200){
+                        InputStream inputStream = conn.getInputStream();
+                        int len=0;
+                        byte[] by=new byte[1024];
+                        StringBuilder builder = new StringBuilder();
+                        while((len=inputStream.read(by))!=-1){
+                            String s = new String(by, 0, len);
+                            builder.append(s);
+                        }
+                        inputStream.close();
+                        final String json = builder.toString();
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(ijk!=null){
+                                    ijk.onSuccess(json);
+                                }
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     public void getReg(final String path, final Map<String,String> map, final Ijk ijk){
-
         new Thread(){
-           @Override
-           public void run() {
-               super.run();
-                       try {
-                           URL url = new URL(path);
-                           HttpURLConnection conn= (HttpURLConnection) url.openConnection();
-                           conn.setRequestMethod("POST");
-                           conn.setReadTimeout(5000);
-                           conn.setConnectTimeout(5000);
-                           conn.setUseCaches(false);
-                           conn.setDoInput(true);
-                           conn.setDoOutput(true);
-                           //拼接中间人
-                           StringBuilder builder = new StringBuilder();
-                           //遍历集合
-                           for(Map.Entry<String,String> entry:map.entrySet()){
-                               String key = entry.getKey();
-                               String value = entry.getValue();
-                               builder.append(key+"="+value+"&");
-                           }
-                           String user = builder.toString();
-                           user = user.substring(0, user.length() - 1);
-                           Log.i("xxx",user);
-                           OutputStream outputStream = conn.getOutputStream();
-                           outputStream.write(user.getBytes());
-                           outputStream.flush();
-                           conn.connect();
-                           //根据结果码判断
-                           int responseCode = conn.getResponseCode();
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    URL url = new URL(path);
+                    HttpURLConnection conn= (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setReadTimeout(5000);
+                    conn.setConnectTimeout(5000);
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+                    StringBuilder builder = new StringBuilder();
+                    for(Map.Entry<String,String> entry:map.entrySet()){
+                        String key = entry.getKey();
+                        String value = entry.getValue();
+                        builder.append(key+"="+value+"&");
+                    }
+                    String user = builder.toString();
+                    user=user.substring(0,user.length()-1);
+                    OutputStream outputStream = conn.getOutputStream();
+                    outputStream.write(user.getBytes());
+                    outputStream.flush();
+                    conn.connect();
+                    int responseCode = conn.getResponseCode();
+                    if(responseCode==200){
+                        InputStream inputStream = conn.getInputStream();
+                        int len=0;
+                        byte[] by=new byte[1024];
+                        StringBuffer buffer = new StringBuffer();
+                        while((len=inputStream.read(by))!=-1){
+                            buffer.append(new String(by,0,len));
+                        }
+                        inputStream.close();
+                        outputStream.close();
+                        final String s = buffer.toString();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                               ijk.onSuccess(s);
+                            }
+                        });
+                    }else{
+                        Log.i("xxx","请求失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
 
-                           if(responseCode==200){
-                               InputStream inputStream = conn.getInputStream();
-                               int len=0;
-                               byte[] by=new byte[1024];
-                               StringBuilder builder1 = new StringBuilder();
-                               while((len=inputStream.read(by))!=-1){
-                                   String s = new String(by, 0, len);
-                                   builder1.append(s);
-                               }
-                               inputStream.close();
-                               outputStream.close();
-                               final String s = builder1.toString();
-                               Log.i("xxx",s);
-                               handler.post(new Runnable() {
-                                   @Override
-                                   public void run() {
-                                       if(ijk!=null){
-                                           ijk.onZhen(s);
-                                       }
-                                   }
-                               });
-                           }else{
-                             Log.i("xxx",responseCode+"");
-                           }
-                       } catch (Exception e) {
-                           e.printStackTrace();
-                       }
-                   }
-
-
-       }.start();
     }
 }

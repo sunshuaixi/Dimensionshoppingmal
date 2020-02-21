@@ -11,19 +11,20 @@ import android.widget.Toast;
 import com.bawei.dimensionshoppingmal.R;
 import com.bawei.dimensionshoppingmal.baseActivity.BaseActivity;
 import com.bawei.dimensionshoppingmal.bean.BeanClass;
+import com.bawei.dimensionshoppingmal.contract.IHomePageContract;
 import com.bawei.dimensionshoppingmal.utils.Myutils;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements IHomePageContract.IView {
 
 
     private EditText et2;
     private EditText et1;
     private Button bt;
-
+    String path = "http://mobile.bwstudent.com/small/user/v1/register";
     @Override
     protected int getlayoutID() {
         return R.layout.activity_main;
@@ -38,34 +39,38 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void getData() {
-        final String path="http://172.17.8.100/small/user/v1/register";
-        //点击事件
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+       bt.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               String phone = et1.getText().toString();
+               String pwd = et2.getText().toString();
+              HashMap<String,String> map=new HashMap<>();
+              Myutils.getInstance().getReg(path, map, new Myutils.Ijk() {
+                  @Override
+                  public void onSuccess(String json) {
+                      Gson gson = new Gson();
+                      BeanClass beanClass = gson.fromJson(json, BeanClass.class);
+                      Log.i("xxx",json);
+                      Toast.makeText(MainActivity.this, ""+beanClass.getMessage(), Toast.LENGTH_SHORT).show();
+                  }
 
-                String phone = et1.getText().toString();
-                String pwd = et2.getText().toString();
-                //存入map集合
-                Map<String,String> map=new HashMap<>();
-                map.put("phone",phone);
-                map.put("pwd",pwd);
-                Myutils.getInstance().getReg(path, map, new Myutils.Ijk() {
-                    @Override
-                    public void onZhen(String json) {
-                       // Log.i("xxx",json);
-                        Gson gson = new Gson();
-                        BeanClass beanClass = gson.fromJson(json, BeanClass.class);
-                        String message = beanClass.getMessage();
-                        Toast.makeText(MainActivity.this, ""+message, Toast.LENGTH_SHORT).show();
-                        Log.i("xxx",message);
-                    }
+                  @Override
+                  public void onError(String msg) {
 
-                    @Override
-                    public void onJia(String msg) {
-                    }
-                });
-            }
-        });
+                  }
+              });
+           }
+       });
+    }
+
+
+    @Override
+    public void onGetBannerSuccess(String str) {
+
+    }
+
+    @Override
+    public void onGetBannerFailure(String str) {
+
     }
 }
