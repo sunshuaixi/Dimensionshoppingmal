@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.bawei.dimensionshoppingmal.R;
 import com.bawei.dimensionshoppingmal.baseActivity.BaseActivity;
+import com.bawei.dimensionshoppingmal.baseActivity.BasePresenter;
 import com.bawei.dimensionshoppingmal.bean.BeanClass;
 import com.bawei.dimensionshoppingmal.contract.IHomePageContract;
 import com.bawei.dimensionshoppingmal.model.HomePageModel;
@@ -29,6 +30,11 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
     private HomePagePresenter homePagePresenter;
     private Button bt1;
 
+
+    @Override
+    public BasePresenter initPresenter() {
+        return new HomePagePresenter(this);
+    }
 
     @Override
     protected int getlayoutID() {
@@ -55,8 +61,10 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
                 map.put("phone",phone);
                 map.put("pwd",pwd);
 
-                homePagePresenter = new HomePagePresenter(MainActivity.this);
-                homePagePresenter.getLogin(path,map);
+                BasePresenter presenter = getPresenter();
+                if(presenter!=null&&presenter instanceof HomePagePresenter){
+                    ((HomePagePresenter)presenter).getLogin(path,map);
+                }
             }
         });
 
@@ -82,16 +90,6 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
 
     @Override
     public void onGetLonginFailure(String str) {
-
-    }
-    //轮播
-    @Override
-    public void onGetBannerSuccess(String str) {
-
-    }
-
-    @Override
-    public void onGetBannerFailure(String str) {
 
     }
 

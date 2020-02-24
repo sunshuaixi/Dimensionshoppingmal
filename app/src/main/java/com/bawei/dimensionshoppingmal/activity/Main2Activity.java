@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bawei.dimensionshoppingmal.R;
 import com.bawei.dimensionshoppingmal.baseActivity.BaseActivity;
+import com.bawei.dimensionshoppingmal.baseActivity.BasePresenter;
 import com.bawei.dimensionshoppingmal.bean.BeanClass;
 import com.bawei.dimensionshoppingmal.contract.IHomePageContract;
 import com.bawei.dimensionshoppingmal.presenter.HomePagePresenter;
@@ -31,6 +32,11 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
     String path="http://mobile.bwstudent.com/small/user/v1/login";
     private HomePagePresenter homePagePresenter;
     private TextView tv;
+
+    @Override
+    public BasePresenter initPresenter() {
+        return new HomePagePresenter(this);
+    }
 
     @Override
     protected int getlayoutID() {
@@ -63,8 +69,12 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
                 HashMap<String,String> map=new HashMap<>();
                 map.put("phone",phone);
                 map.put("pwd",pwd);
-                homePagePresenter = new HomePagePresenter(Main2Activity.this);
-                homePagePresenter.getLogin(path,map);
+                BasePresenter presenter = getPresenter();
+               if(presenter!=null&&presenter instanceof HomePagePresenter){
+                   ((HomePagePresenter)presenter).getLogin(path,map);
+               }
+
+
             }
         });
     }
@@ -75,20 +85,15 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
         BeanClass beanClass = gson.fromJson(str, BeanClass.class);
         String message = beanClass.getMessage();
         Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+        if(message.equals("登录成功")){
+            Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
+            startActivity(intent);
+        }
+
     }
 
     @Override
     public void onGetLonginFailure(String str) {
-
-    }
-    //轮播
-    @Override
-    public void onGetBannerSuccess(String str) {
-
-    }
-
-    @Override
-    public void onGetBannerFailure(String str) {
 
     }
 

@@ -16,36 +16,20 @@ import java.util.HashMap;
  * Descriotion:
  */
 public class HomePageModel implements IHomePageContract.IModel {
-    //轮播
-    @Override
-    public void getBanner(String url, final IModelCallback callback) {
-        //P层传递过来的请求直接调用接口.创建回调Myutils.Ijk(接受网络工具类接受的数据
-        Myutils.getInstance().getJson(url, new Myutils.Ijk() {
-            @Override
-            public void onSuccess(String json) {
-                //如果网络工具类返回成功,则将数据通过接口回调返回给P层
-                callback.onGetBannerSuccess(json);
-            }
-
-            @Override
-            public void onError(String msg) {
-                //如果网络工具类返回失败,则将数据通过接口回调返回给P层
-                callback.onGetBannerFailure(msg);
-            }
-        });
-    }
-
     //注册  登陆
     @Override
     public void getLogin(String path, HashMap<String, String> params, final MyCallBack myCallBack) {
+        //P层传递过来的请求直接调用接口.创建回调Myutils.Ijk(接受网络工具类接受的数据
         Myutils.getInstance().getReg(path, params, new Myutils.Ijk() {
             @Override
             public void onSuccess(String json) {
+                //如果网络工具类返回成功,则将数据通过接口回调返回给P层
                 myCallBack.onGetLoginSuccess(json);
             }
 
             @Override
             public void onError(String msg) {
+                //如果网络工具类返回失败,则将数据通过接口回调返回给P层
                 myCallBack.onGetLoginFailure(msg);
             }
         });

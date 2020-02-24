@@ -11,10 +11,6 @@ public interface IHomePageContract {
 
     //在view的接口中我们需要定义获取成功和失败的方法
     interface IView{
-        //轮播
-        void onGetBannerSuccess(String str);
-        void onGetBannerFailure(String str);
-
         //注册 登录
         void onGetLonginSuccess(String str);
         void onGetLonginFailure(String str);
@@ -24,24 +20,12 @@ public interface IHomePageContract {
 
     //在presenter中,我们需要定义获取数据的方法就可以了
     interface IPresenter{
-        ///轮播
-        void getBanner(String url);
-
         //注册 登陆
         void getLogin(String path, HashMap<String,String> params);
     }
 
     //在model中,我们需要定义获取数据的方法,并再次创建一个接口回调,用来回调网络请求的数据给p层
     interface IModel{
-        //轮播
-        void getBanner(String url,IModelCallback callback);
-
-        interface IModelCallback{
-            //轮播
-            void onGetBannerSuccess(String str);
-            void onGetBannerFailure(String str);
-
-        }
         //注册  登陆
         void getLogin(String path,HashMap<String,String> params,MyCallBack myCallBack);
         interface MyCallBack{
