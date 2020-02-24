@@ -1,5 +1,7 @@
 package com.bawei.dimensionshoppingmal.presenter;
 
+
+
 import com.bawei.dimensionshoppingmal.baseActivity.BasePresenter;
 import com.bawei.dimensionshoppingmal.baseActivity.IBaseView;
 import com.bawei.dimensionshoppingmal.contract.IXbannerContract;
@@ -12,7 +14,8 @@ import com.bawei.dimensionshoppingmal.model.XbannerModel;
  */
 public class XbannerPresenter extends BasePresenter implements IXbannerContract.IPresenter {
 
-    private XbannerModel xbannerModel;
+
+    XbannerModel xbannerModel;
 
     public XbannerPresenter(IBaseView iBaseView) {
         super(iBaseView);
@@ -33,7 +36,7 @@ public class XbannerPresenter extends BasePresenter implements IXbannerContract.
             @Override
             public void onGetXBnnerFailure(String str) {
                 IBaseView view = getView();
-                if(view instanceof IXbannerContract.IView){
+                if(view instanceof  IXbannerContract.IView){
                     IXbannerContract.IView iView= (IXbannerContract.IView) view;
                     iView.onXBannerFailure(str);
                 }
@@ -48,8 +51,8 @@ public class XbannerPresenter extends BasePresenter implements IXbannerContract.
             public void onGetListSuccess(String str) {
                 IBaseView view = getView();
                 if(view instanceof IXbannerContract.IView){
-                    IXbannerContract.IView iView= (IXbannerContract.IView) view;
-                    iView.onListSuccess(str);
+                  IXbannerContract.IView iView= (IXbannerContract.IView) view;
+                  iView.onListSuccess(str);
                 }
             }
 
@@ -63,6 +66,7 @@ public class XbannerPresenter extends BasePresenter implements IXbannerContract.
             }
         });
     }
+
 
     @Override
     protected void initModel() {

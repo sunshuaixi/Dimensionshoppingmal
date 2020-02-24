@@ -10,7 +10,6 @@
     android:id="@+id/xb"
     android:layout_width="match_parent"
     android:layout_height="200dp">
-
 </com.stx.xhb.xbanner.XBanner>
 
             <ListView

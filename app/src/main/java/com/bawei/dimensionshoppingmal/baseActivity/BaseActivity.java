@@ -7,7 +7,7 @@ import com.bawei.dimensionshoppingmal.R;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements IBaseView{
 
-    private P mPresenter;
+    P mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

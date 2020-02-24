@@ -23,12 +23,11 @@ import java.util.HashMap;
 public class MainActivity  extends BaseActivity implements  IHomePageContract.IView{
 
     private EditText et1;
-    private Button bt2;
     private EditText et2;
     String path = "http://mobile.bwstudent.com/small/user/v1/register";
 
-    private HomePagePresenter homePagePresenter;
     private Button bt1;
+    private TextView tv;
 
 
     @Override
@@ -46,7 +45,7 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
         bt1 = findViewById(R.id.bt1);
         et1 = findViewById(R.id.et1);
         et2 = findViewById(R.id.et2);
-        bt2 = findViewById(R.id.bt2);
+        tv = findViewById(R.id.tv);
 
     }
 
@@ -68,7 +67,7 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
             }
         });
 
-        bt2.setOnClickListener(new View.OnClickListener() {
+        tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Main2Activity.class);

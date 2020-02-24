@@ -50,7 +50,7 @@
             android:src="@mipmap/suo"
             />
     <EditText
-        android:layout_toRightOf="@id/iv1"
+        android:layout_toRightOf="@id/et2"
         android:layout_marginLeft="20dp"
         android:id="@+id/et2"
         android:layout_width="300dp"
@@ -99,15 +99,21 @@
             android:textColor="@android:color/background_light"
             android:text="快速注册"/>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
         <Button
             android:id="@+id/bt"
             android:layout_width="280dp"
             android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="200dp"
             android:text="登陆"
-            android:background="@android:color/background_light"
             android:textColor="#ff5f71"
-            android:layout_marginBottom="120dp"/>
+            android:layout_marginBottom="120dp"
+            android:gravity="center"
+            android:background="@android:color/background_light"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
 </LinearLayout>

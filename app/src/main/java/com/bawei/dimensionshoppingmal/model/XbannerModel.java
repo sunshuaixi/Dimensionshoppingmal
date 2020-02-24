@@ -17,6 +17,7 @@ public class XbannerModel implements IXbannerContract.IModel {
         Myutils.getInstance().getJson(path, new Myutils.Ijk() {
             @Override
             public void onSuccess(String json) {
+                Log.i("xxx",json);
                 myCallback.onGetXBnnerSuccess(json);
             }
 

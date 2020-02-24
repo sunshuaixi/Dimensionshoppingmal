@@ -1,11 +1,12 @@
 package com.bawei.dimensionshoppingmal.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bawei.dimensionshoppingmal.R;
 import com.bawei.dimensionshoppingmal.adapter.ListAdapter;
@@ -50,8 +51,7 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
     @Override
     protected void getData() {
         BasePresenter presenter = getPresenter();
-        if(presenter!=null&&presenter instanceof HomePagePresenter){
-            BasePresenter presenter1 = getPresenter();
+        if(presenter!=null&&presenter instanceof XbannerPresenter){
             ((XbannerPresenter)presenter).getXBnner(banner);
             ((XbannerPresenter)presenter).getList(list);
         }
@@ -59,7 +59,6 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
 
     @Override
     public void onXBannerSuccess(String str) {
-        Log.i("xxx",str);
         Gson gson = new Gson();
         XBannerBean xBannerBean = gson.fromJson(str, XBannerBean.class);
         final List<XBannerBean.ResultBean> result = xBannerBean.getResult();
@@ -79,7 +78,7 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
 
     @Override
     public void onXBannerFailure(String str) {
-
+        Log.i("xxx",str);
     }
 
     @Override
@@ -96,6 +95,6 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
 
     @Override
     public void onListFailure(String str) {
-
+    Log.i("xxx",str);
     }
 }

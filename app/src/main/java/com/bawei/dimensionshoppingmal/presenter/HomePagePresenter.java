@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class HomePagePresenter extends BasePresenter implements IHomePageContract.IPresenter {
     //这里我们需要把传入的v层保存成成员变量
-       HomePageModel model;
+    HomePageModel model;
 
     public HomePagePresenter(IBaseView iBaseView) {
         super(iBaseView);

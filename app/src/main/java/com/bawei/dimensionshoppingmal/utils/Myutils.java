@@ -68,7 +68,7 @@ public class Myutils {
                         }
                         inputStream.close();
                         final String json = builder.toString();
-
+                        Log.i("xxx",json);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -80,6 +80,7 @@ public class Myutils {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.i("xxx",e.toString());
                 }
             }
         }).start();
