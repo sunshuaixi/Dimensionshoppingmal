@@ -3,7 +3,6 @@ package com.bawei.dimensionshoppingmal.presenter;
 import com.bawei.dimensionshoppingmal.baseActivity.BasePresenter;
 import com.bawei.dimensionshoppingmal.baseActivity.IBaseView;
 import com.bawei.dimensionshoppingmal.contract.IXbannerContract;
-import com.bawei.dimensionshoppingmal.model.HomePageModel;
 import com.bawei.dimensionshoppingmal.model.XbannerModel;
 
 /**
