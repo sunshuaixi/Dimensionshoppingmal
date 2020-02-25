@@ -1,12 +1,14 @@
 package com.bawei.dimensionshoppingmal.contract;
 
+import com.bawei.dimensionshoppingmal.baseActivity.IBaseView;
+
 /**
  * TIme:2020/2/22
  * Author:孙帅喜
  * Descriotion:
  */
 public interface IXbannerContract {
-    interface IView{
+    interface IView extends IBaseView {
         void onXBannerSuccess(String str);
         void onXBannerFailure(String str);
 

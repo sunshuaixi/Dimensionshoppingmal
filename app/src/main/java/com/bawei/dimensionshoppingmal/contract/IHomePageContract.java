@@ -1,5 +1,7 @@
 package com.bawei.dimensionshoppingmal.contract;
 
+import com.bawei.dimensionshoppingmal.baseActivity.IBaseView;
+
 import java.util.HashMap;
 
 /**
@@ -10,7 +12,7 @@ import java.util.HashMap;
 public interface IHomePageContract {
 
     //在view的接口中我们需要定义获取成功和失败的方法
-    interface IView{
+    interface IView extends IBaseView {
         //注册 登录
         void onGetLonginSuccess(String str);
         void onGetLonginFailure(String str);
