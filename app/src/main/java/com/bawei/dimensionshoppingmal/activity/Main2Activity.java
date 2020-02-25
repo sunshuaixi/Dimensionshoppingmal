@@ -29,8 +29,6 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
     private EditText et1;
     private EditText et2;
     private Button bt;
-    String path="http://mobile.bwstudent.com/small/user/v1/login";
-    private HomePagePresenter homePagePresenter;
     private TextView tv;
 
     @Override
@@ -53,6 +51,7 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
 
     @Override
     protected void getData() {
+        final String path="http://mobile.bwstudent.com/small/user/v1/login";
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,10 +80,12 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
     //登陆
     @Override
     public void onGetLonginSuccess(String str) {
+        Log.i("xxx",str);
         Gson gson = new Gson();
         BeanClass beanClass = gson.fromJson(str, BeanClass.class);
         String message = beanClass.getMessage();
         Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+        Log.i("xxx",message);
         if(message.equals("登录成功")){
             Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
             startActivity(intent);

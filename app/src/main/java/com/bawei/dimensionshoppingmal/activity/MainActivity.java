@@ -13,9 +13,9 @@ import com.bawei.dimensionshoppingmal.baseActivity.BaseActivity;
 import com.bawei.dimensionshoppingmal.baseActivity.BasePresenter;
 import com.bawei.dimensionshoppingmal.bean.BeanClass;
 import com.bawei.dimensionshoppingmal.contract.IHomePageContract;
-import com.bawei.dimensionshoppingmal.model.HomePageModel;
+
 import com.bawei.dimensionshoppingmal.presenter.HomePagePresenter;
-import com.bawei.dimensionshoppingmal.utils.Myutils;
+
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -23,9 +23,8 @@ import java.util.HashMap;
 public class MainActivity  extends BaseActivity implements  IHomePageContract.IView{
 
     private EditText et1;
-    private EditText et2;
+    private EditText et3;
     String path = "http://mobile.bwstudent.com/small/user/v1/register";
-
     private Button bt1;
     private TextView tv;
 
@@ -44,7 +43,7 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
     protected void initView() {
         bt1 = findViewById(R.id.bt1);
         et1 = findViewById(R.id.et1);
-        et2 = findViewById(R.id.et2);
+        et3 = findViewById(R.id.et3);
         tv = findViewById(R.id.tv);
 
     }
@@ -55,7 +54,7 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
             @Override
             public void onClick(View v) {
                 String phone = et1.getText().toString();
-                String pwd = et2.getText().toString();
+                String pwd = et3.getText().toString();
                 HashMap<String,String> map=new HashMap<>();
                 map.put("phone",phone);
                 map.put("pwd",pwd);

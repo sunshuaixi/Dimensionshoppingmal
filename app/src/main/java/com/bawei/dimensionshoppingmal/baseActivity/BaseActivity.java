@@ -32,7 +32,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mPresenter=null;
         }
     }
-
     public abstract P initPresenter();
 
     protected abstract int getlayoutID();
