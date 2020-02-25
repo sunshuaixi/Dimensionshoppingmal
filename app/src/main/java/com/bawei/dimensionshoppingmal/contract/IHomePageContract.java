@@ -16,8 +16,6 @@ public interface IHomePageContract {
         void onGetLonginFailure(String str);
 
     }
-
-
     //在presenter中,我们需要定义获取数据的方法就可以了
     interface IPresenter{
         //注册 登陆

@@ -19,13 +19,12 @@ public abstract class BasePresenter<V extends IBaseView> {
     //使用弱引用把我们传入的V层包裹起来.提成成员变量
     //WeakReference是系统提供的类,<>中包裹的是我们需要用弱引用的具体的哪一个类型
     //我们这里面是用弱引用包裹了泛型
-    private WeakReference<V> vWeakReference;
+   private WeakReference<V> vWeakReference;
 
     public BasePresenter(V v) {
         //在构造方法中new一个弱引用
         //在new这个弱引用的时候.我们只需要把符合我们创建时候的包裹类型的值传入即可
          vWeakReference = new WeakReference<>(v);
-         initModel();
     }
     protected abstract void initModel();
 
