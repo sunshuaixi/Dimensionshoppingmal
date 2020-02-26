@@ -32,8 +32,10 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
     String banner="http://mobile.bwstudent.com/small/commodity/v1/bannerShow";
     String list="http://mobile.bwstudent.com/small/commodity/v1/commodityList";
 
+
+
     @Override
-    public BasePresenter initPresenter() {
+    public BasePresenter getPresenter() {
         return new XbannerPresenter(this);
     }
 

@@ -30,7 +30,7 @@ public class MainActivity  extends BaseActivity implements  IHomePageContract.IV
 
 
     @Override
-    public BasePresenter initPresenter() {
+    public BasePresenter getPresenter() {
         return new HomePagePresenter(this);
     }
 

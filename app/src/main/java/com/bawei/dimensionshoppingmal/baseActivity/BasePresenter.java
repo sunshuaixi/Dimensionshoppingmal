@@ -1,6 +1,8 @@
 package com.bawei.dimensionshoppingmal.baseActivity;
 
 
+import com.bawei.dimensionshoppingmal.R;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -16,34 +18,28 @@ import java.lang.ref.WeakReference;
  *  * 达到复用的目的
  */
 public abstract class BasePresenter<V extends IBaseView> {
+    private WeakReference<V> vWeakReference;
+
     //使用弱引用把我们传入的V层包裹起来.提成成员变量
     //WeakReference是系统提供的类,<>中包裹的是我们需要用弱引用的具体的哪一个类型
     //我们这里面是用弱引用包裹了泛型
-   private WeakReference<V> vWeakReference;
-
     public BasePresenter(V v) {
-        //在构造方法中new一个弱引用
-        //在new这个弱引用的时候.我们只需要把符合我们创建时候的包裹类型的值传入即可
-         vWeakReference = new WeakReference<>(v);
-         initModel();
-    }
-    protected abstract void initModel();
-
-    public V getView(){
-        //先判断空
-        if(vWeakReference!=null){
-         //通过get方法获取弱引用中的V层
-         return vWeakReference.get();
-        }
-        return null;
+        vWeakReference = new WeakReference<>(v);
+        initModel();
     }
 
-    //添加一个解绑的方法,当V层被销毁得到时候,调用这个方法
-    protected void detachView(){
+    public abstract void initModel();
+
+    public  V getView(){
+       if(vWeakReference!=null){
+            return vWeakReference.get();
+       }
+       return null;
+    }
+
+    public void detachView(){
         if(vWeakReference!=null){
-            //清空弱引用中所有内容
             vWeakReference.clear();
-            //把弱引用置空
             vWeakReference=null;
         }
     }

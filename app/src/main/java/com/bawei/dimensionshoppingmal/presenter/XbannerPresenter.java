@@ -5,6 +5,7 @@ package com.bawei.dimensionshoppingmal.presenter;
 import com.bawei.dimensionshoppingmal.baseActivity.BasePresenter;
 import com.bawei.dimensionshoppingmal.baseActivity.IBaseView;
 import com.bawei.dimensionshoppingmal.contract.IXbannerContract;
+import com.bawei.dimensionshoppingmal.model.HomePageModel;
 import com.bawei.dimensionshoppingmal.model.XbannerModel;
 
 /**
@@ -19,6 +20,11 @@ public class XbannerPresenter extends BasePresenter implements IXbannerContract.
 
     public XbannerPresenter(IBaseView iBaseView) {
         super(iBaseView);
+    }
+
+    @Override
+    public void initModel() {
+         xbannerModel = new XbannerModel();
     }
 
     @Override
@@ -68,8 +74,5 @@ public class XbannerPresenter extends BasePresenter implements IXbannerContract.
     }
 
 
-    @Override
-    protected void initModel() {
-        xbannerModel = new XbannerModel();
-    }
+
 }

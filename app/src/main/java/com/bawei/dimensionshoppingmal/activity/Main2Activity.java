@@ -36,8 +36,9 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
     private String pwd;
     private SharedPreferences sp;
     private CheckBox cb;
+
     @Override
-    public BasePresenter initPresenter() {
+    public BasePresenter getPresenter() {
         return new HomePagePresenter(this);
     }
 
@@ -71,7 +72,7 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean bo = sp.getBoolean("bo", false);
+                //boolean bo = sp.getBoolean("bo", false);
 //               if(bo==true){
 //                   if(bo){
 //                       String phone = sp.getString("phone", "");

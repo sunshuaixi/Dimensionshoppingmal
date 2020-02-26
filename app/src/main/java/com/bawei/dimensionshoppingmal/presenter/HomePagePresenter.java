@@ -20,6 +20,12 @@ public class HomePagePresenter extends BasePresenter implements IHomePageContrac
     public HomePagePresenter(IBaseView iBaseView) {
         super(iBaseView);
     }
+
+    @Override
+    public void initModel() {
+        model = new HomePageModel();
+    }
+
     @Override
     public void getLogin(String path, HashMap<String, String> params) {
         //将v层发起的请求传递到m层,创建一个接口回调IHomePageContract.IModel.IModelCallback()用来接收m层返回的数据
@@ -47,8 +53,5 @@ public class HomePagePresenter extends BasePresenter implements IHomePageContrac
             });
     }
 
-    @Override
-    protected void initModel() {
-         model = new HomePageModel();
-    }
+
 }
