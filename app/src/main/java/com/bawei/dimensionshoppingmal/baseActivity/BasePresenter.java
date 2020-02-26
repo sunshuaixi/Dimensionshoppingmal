@@ -25,6 +25,7 @@ public abstract class BasePresenter<V extends IBaseView> {
         //在构造方法中new一个弱引用
         //在new这个弱引用的时候.我们只需要把符合我们创建时候的包裹类型的值传入即可
          vWeakReference = new WeakReference<>(v);
+         initModel();
     }
     protected abstract void initModel();
 

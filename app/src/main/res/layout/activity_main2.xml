@@ -81,6 +81,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
      <CheckBox
+         android:id="@+id/cb"
          android:layout_width="14dp"
          android:layout_height="14dp"
          android:background="@android:color/background_light"/>

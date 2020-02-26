@@ -1,6 +1,7 @@
 package com.bawei.dimensionshoppingmal.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +32,10 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
     private EditText et2;
     private Button bt;
     private TextView tv;
-
+    private String phone;
+    private String pwd;
+    private SharedPreferences sp;
+    private CheckBox cb;
     @Override
     public BasePresenter initPresenter() {
         return new HomePagePresenter(this);
@@ -47,6 +52,7 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
         et2 = findViewById(R.id.et2);
         bt = findViewById(R.id.bt);
         tv = findViewById(R.id.tv);
+        cb = findViewById(R.id.cb);
     }
 
     @Override
@@ -60,21 +66,33 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
             }
         });
 
+
+
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = et1.getText().toString();
-                String pwd = et2.getText().toString();
-                HashMap<String,String> map=new HashMap<>();
-                map.put("phone",phone);
-                map.put("pwd",pwd);
-                BasePresenter presenter = getPresenter();
-               if(presenter!=null&&presenter instanceof HomePagePresenter){
-                   ((HomePagePresenter)presenter).getLogin(path,map);
+                boolean bo = sp.getBoolean("bo", false);
+//               if(bo==true){
+//                   if(bo){
+//                       String phone = sp.getString("phone", "");
+//                       String pwd = sp.getString("pwd", "");
+//                       et1.setText(phone);
+//                       et2.setText(pwd);
+//                   }
+//               }else{
+                   phone = et1.getText().toString();
+                   pwd = et2.getText().toString();
+                   HashMap<String,String> map=new HashMap<>();
+                   map.put("phone", phone);
+                   map.put("pwd", pwd);
+                   BasePresenter presenter = getPresenter();
+                   if(presenter!=null&&presenter instanceof HomePagePresenter){
+                       ((HomePagePresenter)presenter).getLogin(path,map);
+                   }
                }
 
 
-            }
+    //        }
         });
     }
     //登陆
@@ -89,7 +107,26 @@ public class Main2Activity extends BaseActivity implements IHomePageContract.IVi
         if(message.equals("登录成功")){
             Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
             startActivity(intent);
+
+//            //创建SharedPreferences
+//            sp = getSharedPreferences("user", MODE_PRIVATE);
+//            //获取编辑对象
+//            SharedPreferences.Editor edit = sp.edit();
+//            if(cb.isChecked()){
+//                edit.putString("phone",phone);
+//                edit.putString("pwd",pwd);
+//                edit.putBoolean("bo",true);
+//                edit.commit();
+//            }else{
+//                edit.putString("phone","");
+//                edit.putString("pwd","");
+//                edit.putBoolean("bo",false);
+//                edit.commit();
+//            }
         }
+
+
+
 
     }
 
