@@ -4,11 +4,15 @@ package com.bawei.dimensionshoppingmal.activity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bawei.dimensionshoppingmal.R;
+import com.bawei.dimensionshoppingmal.adapter.List2Adapter;
+import com.bawei.dimensionshoppingmal.adapter.List3Adapter;
 import com.bawei.dimensionshoppingmal.adapter.ListAdapter;
 import com.bawei.dimensionshoppingmal.baseActivity.BaseActivity;
 import com.bawei.dimensionshoppingmal.baseActivity.BasePresenter;
@@ -28,7 +32,12 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
 
 
     private XBanner xb;
-    private ListView lv;
+    private GridView gv1;
+    private TextView tv1;
+    private TextView tv2;
+    private TextView tv3;
+    private ListView lv2;
+    private GridView gv3;
     String banner="http://mobile.bwstudent.com/small/commodity/v1/bannerShow";
     String list="http://mobile.bwstudent.com/small/commodity/v1/commodityList";
 
@@ -47,7 +56,12 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
     @Override
     protected void initView() {
         xb = findViewById(R.id.xb);
-        lv = findViewById(R.id.lv);
+        gv1 = findViewById(R.id.gv1);
+        lv2 = findViewById(R.id.lv2);
+        gv3 = findViewById(R.id.gv3);
+        tv1 = findViewById(R.id.tv1);
+        tv2 = findViewById(R.id.tv2);
+        tv3 = findViewById(R.id.tv3);
     }
 
     @Override
@@ -85,14 +99,30 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
 
     @Override
     public void onListSuccess(String str) {
-        Log.i("xxx",str);
         Gson gson = new Gson();
         ListBean listBean = gson.fromJson(str, ListBean.class);
         ListBean.ResultBean result = listBean.getResult();
-        ListBean.ResultBean.MlssBean mlss1 = result.getMlss();
-        List<ListBean.ResultBean.MlssBean.CommodityListBeanXX> commodityList = mlss1.getCommodityList();
-        ListAdapter listAdapter = new ListAdapter(Main3Activity.this, commodityList);
-        lv.setAdapter(listAdapter);
+        ListBean.ResultBean.RxxpBean rxxp = result.getRxxp();
+        ListBean.ResultBean.MlssBean mlss = result.getMlss();
+        ListBean.ResultBean.PzshBean pzsh = result.getPzsh();
+        String name = rxxp.getName();
+        tv1.setText(name);
+        String name1 = mlss.getName();
+        tv2.setText(name1);
+        String name2 = pzsh.getName();
+        tv3.setText(name2);
+        List<ListBean.ResultBean.RxxpBean.CommodityListBean> commodityList = rxxp.getCommodityList();
+        ListAdapter list1Adapter = new ListAdapter(Main3Activity.this, commodityList);
+        gv1.setAdapter(list1Adapter);
+
+        List<ListBean.ResultBean.MlssBean.CommodityListBeanXX> commodityList1 = mlss.getCommodityList();
+        List2Adapter list2Adapter = new List2Adapter(Main3Activity.this, commodityList1);
+        lv2.setAdapter(list2Adapter);
+
+        List<ListBean.ResultBean.PzshBean.CommodityListBeanX> commodityList2 = pzsh.getCommodityList();
+        List3Adapter list3Adapter = new List3Adapter(Main3Activity.this,commodityList2);
+        gv3.setAdapter(list3Adapter);
+
     }
 
     @Override
