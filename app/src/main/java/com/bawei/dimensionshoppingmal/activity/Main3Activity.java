@@ -2,11 +2,16 @@ package com.bawei.dimensionshoppingmal.activity;
 
 
 
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,16 +33,42 @@ import com.stx.xhb.xbanner.XBanner;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * * RecyclerView:
+ *  * 1.在 buildGradle 中，添加依赖和配合使用的代码
+ *  * 2.在布局文件中创建 RecyclerView 的控件
+ *  * 3.通过 findViewById 获取控件的实例
+ *  * 4.在获取到数据的地方，开始 new 布局管理器
+ *  * 5.如果想使用线性布局，new LinearLayoutManager（）
+ *  *   第一个参数：上下文
+ *  *   第二个参数：线性布局是横向还是纵向展示，RecyclerView.HORIZONTAL 代表横向 RecyclerView.VERTICAL 代表纵向
+ *  *   第三个参数：true 代表从尾部开始展示，false 代表从头开始展示
+ *  *
+ *  * 5.如果想使用网格布局，new GridLayoutManager（）
+ *  *   第一个参数：上下文
+ *  *   第二个参数：展示的数量，如果第三个参数横向展示，则是展示几行 如果纵向展示，展示激烈
+ *  *   第三个参数：线性布局是横向还是纵向展示，RecyclerView.HORIZONTAL 代表横向 RecyclerView.VERTICAL 代表纵向
+ *  *   第四个参数：true 代表从尾部开始展示，false 代表从头开始展示
+ *  *
+ *  * 5.如果想使用瀑布流布局，new StaggeredGridLayoutManager（）
+ *  *   第一个参数：展示的数量，如果第三个参数横向展示，则是展示几行 如果纵向展示，展示激烈
+ *  *   第二个参数：线性布局是横向还是纵向展示，RecyclerView.HORIZONTAL 代表横向 RecyclerView.VERTICAL 代表纵向
+ *  *
+ *  * 6.把 布局管理器 添加到 RecyclerView 中 ！！！！！！！！！！！！
+ *  * 7.new 一个 adapter 具体里面的操作，见 RxxpAdapter 类
+ *  * 8.把 adapter 添加到 RecyclerView 中
+ *  */
+
 public class Main3Activity extends BaseActivity implements IXbannerContract.IView {
 
 
     private XBanner xb;
-    private GridView gv1;
+    private RecyclerView rl1;
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
-    private ListView lv2;
-    private GridView gv3;
+    private RecyclerView rl2;
+    private RecyclerView rl3;
     String banner="http://mobile.bwstudent.com/small/commodity/v1/bannerShow";
     String list="http://mobile.bwstudent.com/small/commodity/v1/commodityList";
 
@@ -56,9 +87,9 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
     @Override
     protected void initView() {
         xb = findViewById(R.id.xb);
-        gv1 = findViewById(R.id.gv1);
-        lv2 = findViewById(R.id.lv2);
-        gv3 = findViewById(R.id.gv3);
+        rl1 = findViewById(R.id.rl1);
+        rl2 = findViewById(R.id.rl2);
+        rl3 = findViewById(R.id.rl3);
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
@@ -112,16 +143,35 @@ public class Main3Activity extends BaseActivity implements IXbannerContract.IVie
         String name2 = pzsh.getName();
         tv3.setText(name2);
         List<ListBean.ResultBean.RxxpBean.CommodityListBean> commodityList = rxxp.getCommodityList();
-        ListAdapter list1Adapter = new ListAdapter(Main3Activity.this, commodityList);
-        gv1.setAdapter(list1Adapter);
+//        ListAdapter list1Adapter = new ListAdapter(Main3Activity.this, commodityList);
+//        rl1.setAdapter(list1Adapter);
 
         List<ListBean.ResultBean.MlssBean.CommodityListBeanXX> commodityList1 = mlss.getCommodityList();
-        List2Adapter list2Adapter = new List2Adapter(Main3Activity.this, commodityList1);
-        lv2.setAdapter(list2Adapter);
-
+//        List2Adapter list2Adapter = new List2Adapter(Main3Activity.this, commodityList1);
+//        lv2.setAdapter(list2Adapter);
+//
         List<ListBean.ResultBean.PzshBean.CommodityListBeanX> commodityList2 = pzsh.getCommodityList();
-        List3Adapter list3Adapter = new List3Adapter(Main3Activity.this,commodityList2);
-        gv3.setAdapter(list3Adapter);
+//        List3Adapter list3Adapter = new List3Adapter(Main3Activity.this,commodityList2);
+//        gv3.setAdapter(list3Adapter);
+
+        //使用网格布局 new GridLayoutManager();
+        RecyclerView.LayoutManager layoutManager=new GridLayoutManager(this,3);
+        rl1.setLayoutManager(layoutManager);
+
+        RxxpAdapter rxxpAdapter = new RxxpAdapter(this, commodityList);
+        rl1.setAdapter(rxxpAdapter);
+
+        // newLinearLayoutManager
+        RecyclerView.LayoutManager layoutManager1=  new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        rl2.setLayoutManager(layoutManager1);
+        MllsAdapter mllsAdapter = new MllsAdapter(this, commodityList1);
+        rl2.setAdapter(mllsAdapter);
+
+        //
+        RecyclerView.LayoutManager layoutManager2=new GridLayoutManager(this,2);
+        rl3.setLayoutManager(layoutManager2);
+        PzshAdapter pzshAdapter = new PzshAdapter(this, commodityList2);
+        rl3.setAdapter(pzshAdapter);
 
     }
 

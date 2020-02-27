@@ -17,6 +17,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    //以下是配合recyclerview使用的
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '27.1.1' //这里改为你项目使用的版本即可
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -31,5 +42,6 @@ dependencies {
     implementation 'com.github.xiaohaibin:XBanner:1.7.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.github.bumptech.glide:volley-integration:4.9.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 
 }
